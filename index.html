@@ -23,6 +23,7 @@
       try {
         let response = await fetch('https://crimson-morning-835f.4gvmskhhyj.workers.dev/');
         let data = await response.json();
+        // Display the clientIP from the Worker response
         document.getElementById('real-ip').innerText = `Your Real IP Address: ${data.clientIP}`;
       } catch (error) {
         console.error('Error fetching Real IP:', error);
