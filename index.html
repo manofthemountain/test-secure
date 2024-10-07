@@ -6,6 +6,35 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Test Secure</title>
   <link rel="stylesheet" href="styles.css">
+  <script>
+    // Fetch the public IP address using ipify
+    async function getPublicIP() {
+      try {
+        let response = await fetch('https://api.ipify.org?format=json');
+        let data = await response.json();
+        document.getElementById('public-ip').innerText = `Your Public IP Address: ${data.ip}`;
+      } catch (error) {
+        console.error('Error fetching Public IP:', error);
+      }
+    }
+
+    // Fetch the real IP from the Cloudflare Worker
+    async function getRealIP() {
+      try {
+        let response = await fetch('https://crimson-morning-835f.4gvmskhhyj.workers.dev/');
+        let data = await response.json();
+        document.getElementById('real-ip').innerText = `Your Real IP Address: ${data.clientIP}`;
+      } catch (error) {
+        console.error('Error fetching Real IP:', error);
+      }
+    }
+
+    // Run both functions after the page loads
+    window.onload = function() {
+      getPublicIP();
+      getRealIP();
+    };
+  </script>
 </head>
 <body>
   <header>
@@ -15,6 +44,11 @@
     <section>
       <h2>About Us</h2>
       <p>This is a test site to demonstrate a secure portal implementation, providing a foundation for secure, static website hosting.</p>
+    </section>
+    <section>
+      <h2>Visitor Info</h2>
+      <p id="public-ip">Fetching your Public IP address...</p>
+      <p id="real-ip">Fetching your Real IP address (if behind a proxy)...</p>
     </section>
   </main>
   <footer>
